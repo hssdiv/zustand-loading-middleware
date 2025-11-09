@@ -36,6 +36,7 @@ const useBearStore = create(
 ```
 
 ### Example usage
+```jsx
 function BearCounter() {
   const bears = useBearStore((state) => state.bears)
   const loading = useBearStore((state) => state.loading)
@@ -50,3 +51,4 @@ function BearCounter() {
     </View>
   );
 }
+```
