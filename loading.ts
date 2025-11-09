@@ -6,6 +6,8 @@ import { StateCreator, StoreMutatorIdentifier } from 'zustand';
  * @example ['myFunc1', 'myFunc2']
  * @param {string[]} params.blacklist if specified, it will not add set({ loading }) to functions inside array. ex: ['someFunc', 'anotherFunc'] (ignored if whitelist is present)
  * @default ['setLoading']
+ * @param {string} params.loadingVarName if specified you can change what boolean variable will be set to true\false on function start\end
+ * @default "loading"
  */
 export const loading: <
   T,
@@ -13,9 +15,9 @@ export const loading: <
   Mcs extends [StoreMutatorIdentifier, unknown][] = [],
 >(
   initializer: StateCreator<T, [...Mps], Mcs>,
-  params?: { blacklist?: string[]; whitelist?: string[] },
+  params?: { blacklist?: string[]; whitelist?: string[]; loadingVarName?: string },
 ) => StateCreator<T, Mps, [...Mcs]> = (config, params) => (set, get, api) => {
-  const { blacklist, whitelist = [] } = params || {};
+  const { blacklist, whitelist = [], loadingVarName } = params || {};
   const store: any = config(set, get, api);
 
   const innerBlackList = blacklist
@@ -33,10 +35,10 @@ export const loading: <
     ) {
       store[key] = async (...args: any[]) => {
         try {
-          set({ loading: true } as any);
+          set({ [loadingVarName || 'loading']: true } as any);
           return await value(...args);
         } finally {
-          set({ loading: false } as any);
+          set({ [loadingVarName || 'loading']: false } as any);
         }
       };
     }
