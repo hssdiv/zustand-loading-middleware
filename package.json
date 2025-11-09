@@ -6,7 +6,7 @@
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "scripts": {
-    "publish": "npm publish",
+    "deploy": "npm publish",
     "build": "tsup src/index.ts"
   },
   "keywords": [
