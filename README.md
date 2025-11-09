@@ -1,4 +1,5 @@
-#### Middleware adds set({ loading: true }) at the start of function(s) and set({ loading: false }) at the end (which removes the need to add those lines every time you do an async operation)
+#### Middleware sets boolean flag loading=true at the start of function(s) and loading=false at it's end
+This removes the need to add those lines manually every time you do an async operation
 
 
 ### Example using "loading" middleware
@@ -14,12 +15,12 @@ const useBearStore = create(
       setLoading: (value) => set({ loading: value }),
       bears: 0,
       fetchBears: async (forest) => {
-        // code below will be automatically added by middleware (wraps whole function in try-finally block)
+        // commented code below will be automatically added by middleware (it wraps whole function in try-finally block)
         // try {
         //   set({ loading: true })
         const response = await fetch(forest)
         set({ bears: await response.json() })
-        //  code below will be automatically added by middleware
+        //  commented code below will be automatically added by middleware
         // } finally {
         //   set({ loading: false })
         // }
@@ -30,12 +31,13 @@ const useBearStore = create(
     {
       whitelist: ['fetchBears'], // if specified "loading" will only be set to true inside those function-names (blacklist will be ignored)
       blacklist: ['removeAllBears', 'setLoading'], // if specified it won't apply set({ loading: ... }) to functions in a list. By default blacklist contains 'setLoading'
+      // loadingVarName: 'isFetching' // change default name for boolean flag that will get updated by middleware 'loading'
     },
     )
 )
 ```
 
-### Example usage
+### Example usage inside component
 ```jsx
 function BearCounter() {
   const bears = useBearStore((state) => state.bears);
