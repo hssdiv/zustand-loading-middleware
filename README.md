@@ -27,11 +27,11 @@ const useBearStore = create(
       },
       removeAllBears: () => set({ bears: 0 }),
     }),
-    // optional params that include "whitelist", "blacklist"
+    // optional params that include "whitelist", "blacklist", "loadingVarName"
     {
       whitelist: ['fetchBears'], // if specified "loading" will only be set to true inside those function-names (blacklist will be ignored)
       blacklist: ['removeAllBears', 'setLoading'], // if specified it won't apply set({ loading: ... }) to functions in a list. By default blacklist contains 'setLoading'
-      // loadingVarName: 'isFetching' // change default name for boolean flag that will get updated by middleware 'loading'
+      // loadingVarName: 'isFetching' // here you can change default name for boolean flag that will get updated by middleware from 'loading' (default) to 'isFetching' (in this case)
     },
     )
 )
