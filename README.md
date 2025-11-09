@@ -38,8 +38,13 @@ const useBearStore = create(
 ### Example usage
 ```jsx
 function BearCounter() {
-  const bears = useBearStore((state) => state.bears)
-  const loading = useBearStore((state) => state.loading)
+  const bears = useBearStore((state) => state.bears);
+  const fetchBears = useBearStore((state) => state.fetchBears);
+  const loading = useBearStore((state) => state.loading);
+
+  useEffect(() => {
+    fetchBears();
+  }, []);
 
   return (
     <View>
