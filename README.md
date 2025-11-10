@@ -15,7 +15,7 @@ const useBearStore = create(
       // setLoading: (value) => set({ loading: value }), <-- if you have "setLoading" it will be ignored by default (to not cause issues)
       bears: 0,
       fetchBears: async (forest) => {
-        // commented code below will be automatically added by middleware (it wraps whole function in try-finally block)
+        // commented code below will be automatically added by middleware, it wraps whole function in try-finally block (note: it won't "catch" any errors as it doesn't inject "catch" block, only "finally")
         // try {
         //   set({ loading: true })
         const response = await fetch(forest)
