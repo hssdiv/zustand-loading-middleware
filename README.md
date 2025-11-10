@@ -15,7 +15,7 @@ const useBearStore = create(
       // setLoading: (value) => set({ loading: value }), <-- if you have "setLoading" it will be ignored by default (to not cause issues)
       bears: 0,
       fetchBears: async (forest) => {
-        // commented code below will be automatically added by middleware, it wraps whole function in try-finally block (note: it won't "catch" any errors as it doesn't inject "catch" block, only "finally")
+        // commented code below will be automatically added by middleware, it wraps whole function in try-finally block
         // try {
         //   set({ loading: true })
         const response = await fetch(forest)
@@ -23,11 +23,12 @@ const useBearStore = create(
         //  commented code below will be automatically added by middleware
         // } finally {
         //   set({ loading: false })
+        // note: it won't "catch" any errors as it doesn't inject "catch" block, only "finally"
         // }
       },
       removeAllBears: () => set({ bears: 0 }),
     }),
-    // optional params that include "whitelist", "blacklist", "loadingVarName"
+    // optional params that you can pass: "whitelist", "blacklist", "loadingVarName"
     {
       whitelist: ['fetchBears'], // if specified "loading" will only be set to true inside those function-names (blacklist will be ignored)
       blacklist: ['removeAllBears', 'setLoading'], // if specified it won't apply set({ loading: ... }) to functions in a list. By default blacklist contains 'setLoading'
