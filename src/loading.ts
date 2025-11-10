@@ -12,11 +12,11 @@ import { StateCreator, StoreMutatorIdentifier } from 'zustand';
 export const loading: <
   T,
   Mps extends [StoreMutatorIdentifier, unknown][] = [],
-  Mcs extends [StoreMutatorIdentifier, unknown][] = [],
+  Mcs extends any[] = [], // Mcs extends [StoreMutatorIdentifier, unknown][] = [],
 >(
   initializer: StateCreator<T, [...Mps], Mcs>,
   params?: { blacklist?: string[]; whitelist?: string[]; loadingVarName?: string },
-) => StateCreator<T, Mps, [...Mcs]> = (config, params) => (set, get, api) => {
+) => StateCreator<any | T, Mps, [...Mcs]> = (config, params) => (set, get, api) => {
   const { blacklist, whitelist = [], loadingVarName } = params || {};
   const store: any = config(set, get, api);
 
