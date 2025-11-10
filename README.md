@@ -23,15 +23,15 @@ const useBearStore = create(
         //  commented code below will be automatically added by middleware
         // } finally {
         //   set({ loading: false })
-        // note: it won't "catch" any errors as it doesn't inject "catch" block, only "finally"
+        // note: it won't "catch" any errors as it doesn't add "catch" block, only "finally"
         // }
       },
       removeAllBears: () => set({ bears: 0 }),
     }),
     // optional params that you can pass: "whitelist", "blacklist", "loadingVarName"
     {
-      whitelist: ['fetchBears'], // if "whitelist" is specified "loading" will only be set to "true" for function in "whitelist" ("blacklist" will be ignored)
-      blacklist: ['removeAllBears', 'setLoading'], // if "blacklist" is specified it won't apply "set({ loading: ... })" to functions in a blacklist. By default blacklist contains 'setLoading'
+      whitelist: ['fetchBears'], // if "whitelist" is specified it will only add "set({ loading: ... })" to function(s) in "whitelist" ("blacklist" will be ignored)
+      blacklist: ['removeAllBears', 'setLoading'], // if "blacklist" is specified it won't add "set({ loading: ... })" to functions in a blacklist. By default blacklist contains "setLoading"
       // loadingVarName: 'isFetching' // by providing "loadingVarName" you can change default name for boolean flag that will get updated by middleware from "loading" (default) to "isFetching" (in this case)
     },
     )
