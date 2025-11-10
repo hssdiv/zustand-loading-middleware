@@ -1,5 +1,5 @@
-#### Middleware sets boolean flag loading=true at the start of function(s) and loading=false at it's end
-This removes the need to add those lines manually every time you do an async operation
+#### Middleware that sets boolean flag loading=true at the start of function(s) and loading=false at it's end
+Removes the need to add "set({ loading:true\false })" manually every time you want to do an async operation
 
 
 ### Example using "loading" middleware
