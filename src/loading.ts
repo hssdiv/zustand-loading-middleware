@@ -1,4 +1,4 @@
-import { StateCreator, StoreMutatorIdentifier } from 'zustand';
+import { StateCreator, StoreMutatorIdentifier } from 'zustand/vanilla';
 
 /** Sets "loading" flag to "true" on every function start and "false" on function end. Doesn't do this for function with name "setLoading"
  * @param {string[]} params.whitelist if specified, it will only add set({ loading }) to functions inside array. Every other store function will not get wrapped in "loading" setter
@@ -12,11 +12,11 @@ import { StateCreator, StoreMutatorIdentifier } from 'zustand';
 export const loading: <
   T,
   Mps extends [StoreMutatorIdentifier, unknown][] = [],
-  Mcs extends any[] = [], // Mcs extends [StoreMutatorIdentifier, unknown][] = [],
+  Mcs extends [StoreMutatorIdentifier, unknown][] = [],
 >(
   initializer: StateCreator<T, [...Mps], Mcs>,
   params?: { blacklist?: string[]; whitelist?: string[]; loadingVarName?: string },
-) => StateCreator<any | T, Mps, [...Mcs]> = (config, params) => (set, get, api) => {
+) => StateCreator<T, Mps, [...Mcs]> = (config, params) => (set, get, api) => {
   const { blacklist, whitelist = [], loadingVarName } = params || {};
   const store: any = config(set, get, api);
 
