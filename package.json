@@ -1,6 +1,6 @@
 {
   "name": "zustand-loading-middleware",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -16,7 +16,7 @@
   "author": "hssdiv",
   "license": "ISC",
   "type": "commonjs",
-  "dependencies": {
+  "peerDependencies": {
     "zustand": "*"
   },
   "repository": {
