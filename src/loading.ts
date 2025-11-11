@@ -1,13 +1,33 @@
 import { StateCreator, StoreMutatorIdentifier } from 'zustand/vanilla';
 
-/** Sets "loading" flag to "true" on every function start and "false" on function end. Doesn't do this for function with name "setLoading"
- * @param {string[]} params.whitelist if specified, it will only add set({ loading }) to functions inside array. Every other store function will not get wrapped in "loading" setter
- * @default []
- * @example ['myFunc1', 'myFunc2']
- * @param {string[]} params.blacklist if specified, it will not add set({ loading }) to functions inside array. ex: ['someFunc', 'anotherFunc'] (ignored if whitelist is present)
- * @default ['setLoading']
- * @param {string} params.loadingVarName if specified you can change what boolean variable will be set to true\false on function start\end
- * @default "loading"
+interface LoadingOptions {
+  /**
+   * If specified, it will only add set({ loading }) to functions inside array.
+   * Every other store function will not get wrapped in "loading" setter.
+   * @default []
+   * @example ['myFunc1', 'myFunc2']
+   */
+  whitelist?: string[];
+
+  /**
+   * (NOTE: ignored if whitelist is present)
+   * Specify functions that you don't want to get wrapped in loading setter.
+   * @default ['setLoading']
+   * @example ['someFunc', 'anotherFunc']
+   */
+  blacklist?: string[];
+
+  /**
+   * Change what boolean variable will be set to true/false on function start/end.
+   * @default "loading"
+   * @example 'isLoading'
+   */
+  loadingVarName?: string;
+}
+
+/**
+ * Sets "loading" flag to "true" on every function start and "false" on function end.
+ * Doesn't do this for function with name "setLoading"
  */
 export const loading: <
   T,
@@ -15,9 +35,9 @@ export const loading: <
   Mcs extends [StoreMutatorIdentifier, unknown][] = [],
 >(
   initializer: StateCreator<T, [...Mps], Mcs>,
-  params?: { blacklist?: string[]; whitelist?: string[]; loadingVarName?: string },
-) => StateCreator<T, Mps, [...Mcs]> = (config, params) => (set, get, api) => {
-  const { blacklist, whitelist = [], loadingVarName } = params || {};
+  options?: LoadingOptions,
+) => StateCreator<T, Mps, [...Mcs]> = (config, options) => (set, get, api) => {
+  const { blacklist, whitelist = [], loadingVarName } = options || {};
   const store: any = config(set, get, api);
 
   const innerBlackList = blacklist
