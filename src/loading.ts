@@ -23,6 +23,13 @@ interface LoadingOptions {
    * @example 'isLoading'
    */
   loadingVarName?: string;
+
+  /**
+   * Apply middleware only to async functions (uses simple check, not guaranteed to work)
+   * @default "false"
+   * @platform web
+   */
+  onlyAsyncWebExperimental?: boolean;
 }
 
 /**
@@ -37,7 +44,12 @@ export const loading: <
   initializer: StateCreator<T, [...Mps], Mcs>,
   options?: LoadingOptions,
 ) => StateCreator<T, Mps, [...Mcs]> = (config, options) => (set, get, api) => {
-  const { blacklist, whitelist = [], loadingVarName } = options || {};
+  const {
+    blacklist,
+    whitelist = [],
+    loadingVarName,
+    onlyAsyncWebExperimental,
+  } = options || {};
   const store: any = config(set, get, api);
 
   const innerBlackList = blacklist
@@ -51,7 +63,8 @@ export const loading: <
       typeof value === 'function' &&
       (whitelist?.length
         ? whitelist.includes(key)
-        : !innerBlackList.includes(key))
+        : !innerBlackList.includes(key)) &&
+        onlyAsyncWebExperimental ? value.constructor.name === 'AsyncFunction' : true
     ) {
       store[key] = async (...args: any[]) => {
         try {
