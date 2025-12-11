@@ -6,8 +6,8 @@
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "scripts": {
-    "deploy": "npm publish",
-    "build": "tsup src/index.ts"
+    "build": "tsup src/index.ts",
+    "deploy": "npm publish"
   },
   "keywords": [
     "zustand",
