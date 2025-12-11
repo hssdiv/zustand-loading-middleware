@@ -18,14 +18,14 @@ interface LoadingOptions {
   blacklist?: string[];
 
   /**
-   * Change what boolean variable will be set to true/false on function start/end.
+   * Change name of boolean variable that will be set to true/false on function start/end.
    * @default "loading"
    * @example 'isLoading'
    */
   loadingVarName?: string;
 
   /**
-   * Apply middleware only to async functions (uses simple check, not guaranteed to work)
+   * Apply middleware only to async functions (uses simple function async check, not guaranteed to work)
    * @default "false"
    * @platform web
    */
